@@ -1,7 +1,6 @@
 package com.example.api.dto;
 
 import java.util.List;
-import org.springframework.web.multipart.MultipartFile;
 import com.example.api.model.Modality;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +14,5 @@ public record CreateAdDTO(
     @NotBlank @Size(max = 40) String city, 
     @NotBlank @Size(min = 11, max = 11) String phoneNumber, 
     @NotNull Modality modality,
-    @NotNull List<String> languages, 
-    @NotNull MultipartFile image) {
+    @NotNull List<String> languages) {
 }

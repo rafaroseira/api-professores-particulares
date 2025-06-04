@@ -7,6 +7,5 @@ public interface AdPreviewDTO {
     String getModality();
     String getName();
     String getLastName();
-    Float getRating(); //won't work with primitive float
-    String getImage();
+    Float getRating(); //não funciona com float primitivo
 }

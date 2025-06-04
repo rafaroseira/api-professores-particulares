@@ -33,9 +33,6 @@ public class AdService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private StorageService storageService;
-
     @Transactional
     public void createAd(CreateAdDTO dto){
 
@@ -43,7 +40,6 @@ public class AdService {
         User teacher = userRepository.findByEmail(auth.getName());
         isTeacherValid(teacher);
         canCreateAd(teacher);
-        String image = storageService.store(dto.image());
 
         List<Language> languages = new ArrayList<>();
 
@@ -56,7 +52,7 @@ public class AdService {
         }
 
         Ad ad = adRepository.save(new Ad(dto.pricePerHour(), dto.title(), dto.description(), dto.city(),
-            dto.modality(), dto.phoneNumber(), languages, image));
+            dto.modality(), dto.phoneNumber(), languages));
 
         teacher.setAd(ad);
         userRepository.save(teacher);
@@ -88,14 +84,16 @@ public class AdService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User teacher = userRepository.findByEmail(auth.getName());
 
-        if(teacher.getAd().getId() == id){
+        if(teacher.getAd() == null){
+            throw new AdNotFoundException("Você não tem anúncios ainda");
+        } else if(teacher.getAd().getId() == id){
             teacher.setAd(null);
             userRepository.save(teacher);
             adRepository.deleteById(id);
         } else {
             throw new AdNotFoundException("O anúncio não pertence a você");
         }
-
+        
     }
 
     @Transactional
@@ -105,7 +103,6 @@ public class AdService {
         User teacher = userRepository.findByEmail(auth.getName());
 
         isTeacherValid(teacher);
-        String image = storageService.store(dto.image());
 
         List<Language> languages = new ArrayList<>();
 
@@ -127,7 +124,6 @@ public class AdService {
         ad.setPhoneNumber(dto.phoneNumber());
         ad.setModality(dto.modality());
         ad.setLanguages(languages);
-        ad.setImage(image);
 
         teacher.setAd(ad);
         userRepository.save(teacher);

@@ -11,8 +11,6 @@ import com.example.api.exceptions.CantCreateAdException;
 import com.example.api.exceptions.EmailAlreadyExistsException;
 import com.example.api.exceptions.LanguageNotFoundException;
 import com.example.api.exceptions.RoleException;
-import com.example.api.exceptions.StorageException;
-import com.example.api.exceptions.StorageFileNotFoundException;
 import com.example.api.exceptions.UserNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 
@@ -33,7 +31,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
         AdNotFoundException.class,
         UserNotFoundException.class,
         LanguageNotFoundException.class,
-        StorageFileNotFoundException.class
     })
     private ResponseEntity<String> notFoundHandler(RuntimeException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -44,8 +41,4 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
 
-        @ExceptionHandler(StorageException.class)
-    private ResponseEntity<String> storageHandler(StorageException e){
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-    }
 }

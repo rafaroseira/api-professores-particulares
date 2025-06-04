@@ -9,5 +9,4 @@ public interface AdDTO {
     String getCity();
     String getModality();
     String getPhoneNumber();
-    String getImage();
 }

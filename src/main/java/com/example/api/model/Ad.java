@@ -48,9 +48,6 @@ public class Ad {
     )
     private List<Language> languages;
 
-    @Column(length = 40)
-    private String image;
-
     public float getPricePerHour() {
         return pricePerHour;
     }
@@ -111,16 +108,8 @@ public class Ad {
         this.languages = languages;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public Ad(float pricePerHour, String title, String description, String city, Modality modality,
-            String phoneNumber, List<Language> languages, String image) {
+            String phoneNumber, List<Language> languages) {
         this.pricePerHour = pricePerHour;
         this.title = title;
         this.description = description;
@@ -128,7 +117,6 @@ public class Ad {
         this.modality = modality;
         this.phoneNumber = phoneNumber;
         this.languages = languages;
-        this.image = image;
     }
 
     public Ad() {
